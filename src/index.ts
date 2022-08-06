@@ -48,7 +48,7 @@ type Question = {
   link: string;
 }
 
-async function fetchQuestion(): Promise<Question> {
+async function fetchQuestion(): Promise<Question | null> {
   console.log('Fetching question');
   const browser = await playwright.chromium.launch();
   const context = await browser.newContext();  
@@ -57,7 +57,7 @@ async function fetchQuestion(): Promise<Question> {
   var desc = await page.$eval('.contents-left .q .detail p', el => el.innerHTML);
   if (desc.indexOf('<br') >= 0) {
     console.error("Long description");
-    process.exit(1);
+    return null;
   }
   var title = await page.$eval('.contents-left .q .detail .title h3', el => el.textContent);
   if (!title) {
@@ -168,6 +168,9 @@ async function saveQuestionScreenshot(question: Question, supabase: SupabaseClie
     process.exit(5);
   }
   const question = await fetchQuestion();
+  if (!question) {
+    return;
+  }
   const supabase = createClient('https://snvtdenjojullslnuljt.supabase.co', key);
   await saveQuestion(question, supabase);
   await saveQuestionScreenshot(question, supabase);
