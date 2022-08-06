@@ -1,0 +1,19 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/src/index.ts",
+      "preLaunchTask": "tsc: build - tsconfig.json",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "env": {
+        "SUPABASE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNudnRkZW5qb2p1bGxzbG51bGp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTk3NjA4NjEsImV4cCI6MTk3NTMzNjg2MX0.PO8h8EC-dilKgfni1D4-ttiihunVPCQ8jK_NFM1oVYg"
+      }
+    }
+  ]
+}
