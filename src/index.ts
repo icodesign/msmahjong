@@ -57,7 +57,7 @@ async function fetchQuestion(): Promise<Question | null> {
   var desc = await page.$eval('.contents-left .q .detail p', el => el.innerHTML);
   if (desc.indexOf('<br') >= 0) {
     console.error("Long description");
-    return null;
+    process.exit(0);
   }
   var title = await page.$eval('.contents-left .q .detail .title h3', el => el.textContent);
   if (!title) {
@@ -117,7 +117,7 @@ async function saveQuestion(question: Question, supabase: SupabaseClient) {
   }
   if (data.length !== 0) {
     console.log(`The question for ${question.date} already exists`);
-    return;
+    process.exit(0);
   }
   var { data, error } = await supabase
     .from(table)
@@ -129,7 +129,7 @@ async function saveQuestion(question: Question, supabase: SupabaseClient) {
   }
   if (data.length !== 0) {
     console.log(`The question for ${question.link} already exists`);
-    return;
+    process.exit(0);
   }
   console.log(`Saving question for ${question.date}`);
   var { data, error } = await supabase
