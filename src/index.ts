@@ -169,7 +169,7 @@ async function saveQuestionScreenshot(question: Question, supabase: SupabaseClie
   }
   const question = await fetchQuestion();
   if (!question) {
-    return;
+    process.exit(0);
   }
   const supabase = createClient('https://snvtdenjojullslnuljt.supabase.co', key);
   await saveQuestion(question, supabase);
