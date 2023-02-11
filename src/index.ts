@@ -161,6 +161,23 @@ async function saveQuestionScreenshot(question: Question, supabase: SupabaseClie
   console.log(`Saved question screenshot for ${question.date} successfully`);
 }
 
+async function saveQuestionAnswerScreenshot(question: Question, supabase: SupabaseClient) {
+  const fileData = await fs.readFile(`./screenshot/${question.date}.png`);
+  const { data, error } = await supabase
+    .storage
+    .from('questions')
+    .upload(`public/${question.date}-answer.png`, fileData, {
+      cacheControl: '3600',
+      contentType: 'image/png',
+      upsert: true
+    });
+  if (error) {
+    console.error(`Failed to save question answer screenshot on ${question.date}, error: ${JSON.stringify(error)}`);
+    process.exit(8);
+  }
+  console.log(`Saved question answer screenshot for ${question.date} successfully`);
+}
+
 (async () => {
   const key = process.env['SUPABASE_KEY'];
   if (!key) {
